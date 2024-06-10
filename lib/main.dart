@@ -42,7 +42,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
-        children: const [
+        children: [
           HomePage(),
           HistoryPage()
         ],

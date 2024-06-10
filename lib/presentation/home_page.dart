@@ -1,10 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:my_budget/presentation/tools/Currency.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
+  HomePage({super.key});
+  final List<Currency> currencies = [
+    Currency(
+      countryImage: 'https://fullhdoboi.ru/wp-content/uploads/_ph/33/948778682.jpg',
+      currencyName: 'USD',
+      exchangeRate: 74.23,
+    ),
+    Currency(
+      countryImage: 'https://w-dog.ru/wallpapers/15/14/468361686196203/evrosoyuz-es-evropa-flag-zvezdy-sinij.jpg',
+      currencyName: 'EUR',
+      exchangeRate: 89.56,
+    ),
+    Currency(
+      countryImage: 'https://pnevmogun.ru/images/wp-content/uploads/2023/04/flag-yaponii-vid.jpg',
+      currencyName: 'JPY',
+      exchangeRate: 0.56,
+    ),
+    Currency(
+      countryImage: 'https://interesnoznat.com/wp-content/uploads/china-flag_enl.jpg',
+      currencyName: 'CNY',
+      exchangeRate: 12.22,
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -15,7 +37,7 @@ class HomePage extends StatelessWidget {
             color: Color.fromRGBO(180, 213, 224, 1),
             child: Padding(
               padding:
-                  EdgeInsets.only(top: 120.0, left: 20, right: 20, bottom: 0),
+                  EdgeInsets.only(top: 80.0, left: 20, right: 20, bottom: 0),
               child: Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Column(
@@ -78,7 +100,7 @@ class HomePage extends StatelessWidget {
                               fit: BoxFit.fill,
                             ),
                             SizedBox(
-                              width: 15,
+                              width: 10,
                             ),
                             Text(
                               "Мои цели",
@@ -91,13 +113,12 @@ class HomePage extends StatelessWidget {
                           ],
                         ),
                         onPressed: () {
-                          // Ваш код, выполняемый при нажатии кнопки
                           print('Нажата кнопка "Мои цели"!');
                         },
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
                     Text("До ближайшей цели",
                         style: TextStyle(
@@ -105,7 +126,7 @@ class HomePage extends StatelessWidget {
                           fontSize: 18,
                         )),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 0),
+                      padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 0),
                       child: LinearProgressIndicator(
                         minHeight: 10,
                         value: 0.75,
@@ -128,7 +149,19 @@ class HomePage extends StatelessWidget {
         ),
         Expanded(
           child: Container(
-            color: Colors.white, // Set the right half to white
+            color: Colors.white,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: currencies.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    CurrencyWidget(currency: currencies[index]),
+                    if (index < currencies.length - 1) Divider(),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ],
