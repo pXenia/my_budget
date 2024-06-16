@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Transaction {
+class TransactionFil {
   final bool isIncome; // true для дохода, false для расхода
   final String name;
   final double amount;
 
-  Transaction({
+  TransactionFil({
     required this.isIncome,
     required this.name,
     required this.amount,
@@ -13,7 +13,7 @@ class Transaction {
 }
 
 class TransactionWidget extends StatelessWidget {
-  final Transaction transaction;
+  final TransactionFil transaction;
 
   TransactionWidget({required this.transaction});
 

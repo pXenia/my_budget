@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_budget/presentation/tools/Currency.dart';
+import 'package:my_budget/presentation/wish_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -34,7 +35,7 @@ class HomePage extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Container(
-            color: const Color.fromRGBO(180, 213, 224, 1),
+            color: const Color(0xffb6bfdb),
             child: Padding(
               padding:
                   const EdgeInsets.only(top: 80.0, left: 20, right: 20, bottom: 0),
@@ -87,7 +88,7 @@ class HomePage extends StatelessWidget {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             elevation: 4,
-                            backgroundColor: const Color.fromRGBO(125, 153, 163, 1),
+                            backgroundColor: const Color(0xff6d82a4),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
@@ -113,7 +114,12 @@ class HomePage extends StatelessWidget {
                           ],
                         ),
                         onPressed: () {
-                          print('Нажата кнопка "Мои цели"!');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WishListScreen(),
+                            ),
+                          );
                         },
                       ),
                     ),
