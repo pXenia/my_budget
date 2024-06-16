@@ -34,27 +34,27 @@ class HomePage extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Container(
-            color: Color.fromRGBO(180, 213, 224, 1),
+            color: const Color.fromRGBO(180, 213, 224, 1),
             child: Padding(
               padding:
-                  EdgeInsets.only(top: 80.0, left: 20, right: 20, bottom: 0),
+                  const EdgeInsets.only(top: 80.0, left: 20, right: 20, bottom: 0),
               child: Padding(
-                padding: EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Баланс",
+                    const Text("Баланс",
                         style: TextStyle(
                           color: Colors.black45,
                           fontSize: 18,
                         )),
-                    Text("100 000 ₽",
+                    const Text("100 000 ₽",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
                         )),
-                    SizedBox(height: 20),
-                    Row(
+                    const SizedBox(height: 15),
+                    const Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -78,7 +78,7 @@ class HomePage extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
                     SizedBox(
@@ -87,11 +87,11 @@ class HomePage extends StatelessWidget {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             elevation: 4,
-                            backgroundColor: Color.fromRGBO(125, 153, 163, 1),
+                            backgroundColor: const Color.fromRGBO(125, 153, 163, 1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            padding: EdgeInsets.all(8.0)),
+                            padding: const EdgeInsets.all(8.0)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -99,10 +99,10 @@ class HomePage extends StatelessWidget {
                               "https://cdn1.iconfinder.com/data/icons/money-bag-1/100/bag-ruble-256.png",
                               fit: BoxFit.fill,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            Text(
+                            const Text(
                               "Мои цели",
                               style: TextStyle(
                                 color: Colors.black,
@@ -117,16 +117,16 @@ class HomePage extends StatelessWidget {
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
-                    Text("До ближайшей цели",
+                    const Text("До ближайшей цели",
                         style: TextStyle(
                           color: Colors.black45,
                           fontSize: 18,
                         )),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 0),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8,horizontal: 0),
                       child: LinearProgressIndicator(
                         minHeight: 10,
                         value: 0.75,
@@ -134,7 +134,7 @@ class HomePage extends StatelessWidget {
                     ),
                     Container(
                       width: double.maxFinite,
-                      child: Text("10 000 ₽",
+                      child: const Text("10 000 ₽",
                           textAlign: TextAlign.right,
                           style: TextStyle(
                             fontSize: 16,
@@ -148,20 +148,17 @@ class HomePage extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Container(
-            color: Colors.white,
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: currencies.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    CurrencyWidget(currency: currencies[index]),
-                    if (index < currencies.length - 1) Divider(),
-                  ],
-                );
-              },
-            ),
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: currencies.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  CurrencyWidget(currency: currencies[index]),
+                  if (index < currencies.length - 1) const Divider(),
+                ],
+              );
+            },
           ),
         ),
       ],
