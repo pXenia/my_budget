@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_budget/presentation/state/transaction_store.dart';
 
 import '../data/models/transaction_model.dart';
+
 
 class AddTransactionScreen extends StatefulWidget {
   @override
@@ -113,7 +116,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                   Row(
                     children: [
                       Text(
-                        'Дата: $_selectedDate}',
+                        'Дата: ${_selectedDate}',
                       ),
                       IconButton(
                         icon: Icon(Icons.calendar_today),
@@ -135,21 +138,20 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     );
   }
 
-  void _saveForm() {
+  void _saveForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
       final newTransaction = TransactionModel(
-        id: transactionStore.nextId,
+        id: transactionStore.nextId.toString(),
         name: _transactionName,
         date: _selectedDate,
         type: _isIncome,
         cost: _transactionCost,
       );
 
-      transactionStore.createTransaction(newTransaction);
+      await transactionStore.createTransaction(newTransaction);
       Navigator.pop(context);
     }
   }
-
 }

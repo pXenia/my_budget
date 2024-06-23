@@ -2,23 +2,23 @@ import '../../domain/repositories/transaction_repository.dart';
 import '../data_sources/local/database.dart';
 import '../models/transaction_model.dart';
 
-class TransactionRepositoryImpl implements TransactionRepository {
+class TransactionRepository {
   final Database hiveDatabase;
 
-  TransactionRepositoryImpl({required this.hiveDatabase});
+  TransactionRepository(this.hiveDatabase);
 
-  @override
-  Future<void> addTransaction(TransactionModel transaction) async {
-    await hiveDatabase.addTransaction(transaction);
+  Future<void> createTransaction(TransactionModel transaction) async {
+    final box = hiveDatabase.transactionBox;
+    await box.put(transaction.id, transaction);
   }
 
-  @override
-  Future<List<TransactionModel>> getTransactions() async {
-    return await hiveDatabase.getTransactions();
+  List<TransactionModel> getTransactions() {
+    final box = hiveDatabase.transactionBox;
+    return box.values.toList();
   }
 
-  @override
-  Future<void> deleteTransaction(int id) async {
-    await hiveDatabase.deleteTransaction(id);
+  Future<void> deleteTransaction(String id) async {
+    final box = hiveDatabase.transactionBox;
+    await box.delete(id);
   }
 }

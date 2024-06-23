@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:my_budget/presentation/history_page.dart';
 import 'package:my_budget/presentation/home_page.dart';
+import 'package:my_budget/presentation/state/transaction_store.dart';
 
-import 'data/models/transaction_model.dart';
-import 'data/models/wish_model.dart';
+import 'data/data_sources/local/database.dart';
 import 'app.dart' as di;
+import 'data/repositories/transaction_repository_impl.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
 
-  // Register adapters
-  Hive.registerAdapter(TransactionModelAdapter());
-  Hive.registerAdapter(WishModelAdapter());
+  final hiveDatabase = Database();
+  await hiveDatabase.init();
 
-  // Open boxes
-  await Hive.openBox<TransactionModel>('transactions');
-  await Hive.openBox<WishModel>('wishes');
-  await di.init();
+  GetIt.instance.registerSingleton<Database>(hiveDatabase);
+  GetIt.instance.registerSingleton<TransactionRepository>(TransactionRepository(hiveDatabase));
+  GetIt.instance.registerSingleton<TransactionStore>(TransactionStore());
+
   runApp(MyApp());
 }
 

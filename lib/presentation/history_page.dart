@@ -2,19 +2,28 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:my_budget/presentation/state/transaction_store.dart';
 import 'package:my_budget/presentation/tools/Transaction.dart';
 
 import 'add_transaction_page.dart';
 
-class HistoryPage extends StatelessWidget {
-  HistoryPage({super.key});
 
+class HistoryPage extends StatefulWidget {
+  @override
+  _HistoryPageState createState() => _HistoryPageState();
+}
+
+class _HistoryPageState extends State<HistoryPage> {
   final TransactionStore transactionStore = GetIt.instance<TransactionStore>();
 
   @override
   void initState() {
+    super.initState();
     transactionStore.loadTransactions();
+    reaction((_) => transactionStore.transactions.length, (_) {
+      setState(() {});
+    });
   }
 
   @override

@@ -49,4 +49,3 @@ class TransactionWidget extends StatelessWidget {
     );
   }
 }
-

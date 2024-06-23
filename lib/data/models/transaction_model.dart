@@ -5,25 +5,19 @@ part 'transaction_model.g.dart';
 @HiveType(typeId: 0)
 class TransactionModel extends HiveObject {
   @HiveField(0)
-  final int id;
+  String id;
 
   @HiveField(1)
-  final String name;
+  String name;
 
   @HiveField(2)
-  final DateTime date;
+  DateTime date;
 
   @HiveField(3)
-  final bool type;
+  bool type;
 
   @HiveField(4)
-  final double cost;
+  double cost;
 
-  TransactionModel({
-    required this.id,
-    required this.name,
-    required this.date,
-    required this.type,
-    required this.cost,
-  });
+  TransactionModel({required this.id, required this.name, required this.date, required this.type, required this.cost});
 }
