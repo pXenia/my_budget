@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:my_budget/presentation/history_page.dart';
 import 'package:my_budget/presentation/home_page.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'data/models/transaction_model.dart';
+import 'data/models/wish_model.dart';
+import 'app.dart' as di;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+
+  // Register adapters
+  Hive.registerAdapter(TransactionModelAdapter());
+  Hive.registerAdapter(WishModelAdapter());
+
+  // Open boxes
+  await Hive.openBox<TransactionModel>('transactions');
+  await Hive.openBox<WishModel>('wishes');
+  await di.init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

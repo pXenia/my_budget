@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
 
-class TransactionFil {
-  final bool isIncome; // true для дохода, false для расхода
-  final String name;
-  final double amount;
-
-  TransactionFil({
-    required this.isIncome,
-    required this.name,
-    required this.amount,
-  });
-}
+import '../../data/models/transaction_model.dart';
 
 class TransactionWidget extends StatelessWidget {
-  final TransactionFil transaction;
+  final TransactionModel transaction;
 
   TransactionWidget({required this.transaction});
 
@@ -27,7 +17,7 @@ class TransactionWidget extends StatelessWidget {
             width: 20,
             height: 20,
             decoration: BoxDecoration(
-              color: transaction.isIncome ? Colors.green : Colors.red,
+              color: Colors.green,
               shape: BoxShape.circle,
             ),
           ),
@@ -45,7 +35,7 @@ class TransactionWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 4),
                 Text(
-                  '${transaction.amount.toStringAsFixed(0)} RUB',
+                  '${transaction.cost.toStringAsFixed(0)} RUB',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey[600],

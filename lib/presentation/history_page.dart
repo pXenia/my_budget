@@ -1,64 +1,21 @@
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:get_it/get_it.dart';
+import 'package:my_budget/presentation/state/transaction_store.dart';
 import 'package:my_budget/presentation/tools/Transaction.dart';
-import 'package:my_budget/presentation/tools/add_transaction_page.dart';
+
+import 'add_transaction_page.dart';
 
 class HistoryPage extends StatelessWidget {
   HistoryPage({super.key});
 
-  final transactions = <TransactionFil>[
-    TransactionFil(
-      isIncome: true,
-      name: 'Зарплата',
-      amount: 50000,
-    ),
-    TransactionFil(
-      isIncome: false,
-      name: 'Покупка продуктов',
-      amount: 4500,
-    ),
-    TransactionFil(
-      isIncome: false,
-      name: 'Покупка одежды',
-      amount: 500,
-    ),
-    TransactionFil(
-      isIncome: false,
-      name: 'Покупка обуви',
-      amount: 4500,
-    ),
-    TransactionFil(
-      isIncome: true,
-      name: 'Премия',
-      amount: 40000,
-    ),
-    TransactionFil(
-      isIncome: true,
-      name: 'Инвестиции',
-      amount: 20000,
-    ),
-    TransactionFil(
-      isIncome: true,
-      name: 'Зарплата',
-      amount: 50000,
-    ),
-    TransactionFil(
-      isIncome: false,
-      name: 'Покупка продуктов',
-      amount: 4500,
-    ),
-    TransactionFil(
-      isIncome: false,
-      name: 'Покупка одежды',
-      amount: 500,
-    ),
-    TransactionFil(
-      isIncome: false,
-      name: 'Покупка обуви',
-      amount: 4500,
-    ),
-  ];
+  final TransactionStore transactionStore = GetIt.instance<TransactionStore>();
+
+  @override
+  void initState() {
+    transactionStore.loadTransactions();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +28,7 @@ class HistoryPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddTransactionPage(),
+                  builder: (context) => AddTransactionScreen(),
                 ),
               );
             },
@@ -84,19 +41,24 @@ class HistoryPage extends StatelessWidget {
             flex: 2,
             child: Container(
               color: const Color(0xffb6bfdb),
-              ),
             ),
+          ),
           Expanded(
             flex: 3,
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: transactions.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    TransactionWidget(transaction: transactions[index]),
-                    if (index < transactions.length - 1) Divider(),
-                  ],
+            child: Observer(
+              builder: (_) {
+                return ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: transactionStore.transactions.length,
+                  itemBuilder: (context, index) {
+                    final transaction = transactionStore.transactions[index];
+                    return Column(
+                      children: [
+                        TransactionWidget(transaction: transaction),
+                        if (index < transactionStore.transactions.length - 1) Divider(),
+                      ],
+                    );
+                  },
                 );
               },
             ),
