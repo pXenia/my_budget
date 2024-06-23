@@ -6,7 +6,7 @@ class GetTransactions {
 
   GetTransactions(this.repository);
 
-  Future<List<TransactionModel>> call() async {
-    return await repository.getTransactions();
+  List<TransactionModel> call() {
+    return repository.getTransactions();
   }
 }

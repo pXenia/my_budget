@@ -6,7 +6,7 @@ class AddTransaction {
 
   AddTransaction(this.repository);
 
-  Future<void> call(TransactionModel transaction) async {
-    await repository.addTransaction(transaction);
+  Future<void> call(TransactionModel transaction) {
+  return repository.addTransaction(transaction);
   }
 }

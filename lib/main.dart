@@ -1,27 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:my_budget/presentation/history_page.dart';
 import 'package:my_budget/presentation/home_page.dart';
-import 'package:my_budget/presentation/state/transaction_store.dart';
-
-import 'data/data_sources/local/database.dart';
 import 'app.dart' as di;
-import 'data/repositories/transaction_repository_impl.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final hiveDatabase = Database();
-  await hiveDatabase.init();
-
-  GetIt.instance.registerSingleton<Database>(hiveDatabase);
-  GetIt.instance.registerSingleton<TransactionRepository>(TransactionRepository(hiveDatabase));
-  GetIt.instance.registerSingleton<TransactionStore>(TransactionStore());
-
+  await di.init();
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
