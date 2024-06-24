@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:my_budget/presentation/wish_page.dart';
+import 'package:get_it/get_it.dart';
+import 'package:my_budget/presentation/state/wish_store.dart';
+import '../data/models/wish_model.dart';
 
-class AddWishScreen extends StatefulWidget {
+class AddWishPage extends StatefulWidget {
   @override
-  _AddWishScreenState createState() => _AddWishScreenState();
+  _AddWishPageState createState() => _AddWishPageState();
 }
 
-class _AddWishScreenState extends State<AddWishScreen> {
+class _AddWishPageState extends State<AddWishPage> {
   final _formKey = GlobalKey<FormState>();
   String _wishName = '';
   double _wishCost = 0.0;
-  bool _progress = false;
+
+  final WishStore wishStore = GetIt.instance<WishStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -70,44 +73,32 @@ class _AddWishScreenState extends State<AddWishScreen> {
                       _wishCost = double.parse(value!);
                     },
                   ),
-                  DropdownButtonFormField<bool>(
-                    decoration: InputDecoration(labelText: 'Статус'),
-                    value: _progress,
-                    items: [
-                      DropdownMenuItem(
-                        value: false,
-                        child: Text('Не выполнено'),
-                      ),
-                      DropdownMenuItem(
-                        value: true,
-                        child: Text('Выполнено'),
-                      ),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        _progress = value!;
-                      });
-                    },
-                  ),
                   SizedBox(height: 20),
-                  // Кнопка для сохранения формы
+                  ElevatedButton(
+                    onPressed: _saveForm,
+                    child: Text('Сохранить'),
+                  ),
                 ],
               ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xffb6bfdb),
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddWishScreen(),
-              ));
-        },
-        child: Icon(Icons.done),
-      ),
     );
+  }
+  void _saveForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final newWish = WishModel(
+        id: wishStore.nextId.toString(),
+        name: _wishName,
+        cost: _wishCost,
+        type: false,
+      );
+
+      await wishStore.createWish(newWish);
+      Navigator.pop(context);
+    }
   }
 }

@@ -96,7 +96,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                   DropdownButtonFormField<bool>(
                     decoration: InputDecoration(labelText: 'Тип'),
                     value: _isIncome,
-                    items: [
+                    items: const [
                       DropdownMenuItem(
                         value: true,
                         child: Text('Доход'),

@@ -5,16 +5,16 @@ part 'wish_model.g.dart';
 @HiveType(typeId: 1)
 class WishModel extends HiveObject {
   @HiveField(0)
-  final int id;
+  String id;
 
   @HiveField(1)
-  final String name;
+  String name;
 
   @HiveField(2)
-  final double cost;
+  double cost;
 
   @HiveField(3)
-  final bool type;
+  bool type;
 
   WishModel({
     required this.id,

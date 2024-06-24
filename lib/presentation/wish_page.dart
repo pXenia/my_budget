@@ -1,78 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:my_budget/presentation/add_wish_page.dart';
+import 'package:my_budget/presentation/state/wish_store.dart';
+import 'package:my_budget/presentation/tools/Wish.dart';
 
-class Wish {
-  final String name;
-  final double cost;
-  final bool progress;
-
-  Wish({
-    required this.name,
-    required this.cost,
-    required this.progress
-  });
+class WishPage extends StatefulWidget {
+  @override
+  _WishPageState createState() => _WishPageState();
 }
 
-class WishWidget extends StatelessWidget {
-  final Wish wish;
+class _WishPageState extends State<WishPage> {
 
-  WishWidget({required this.wish});
+  final WishStore wishStore = GetIt.instance<WishStore>();
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      wish.name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      '${wish.cost.toStringAsFixed(0)} RUB',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  wish.progress ? "Выполнено" : "Не выполнено",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.indigo,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+  void initState() {
+    super.initState();
+    wishStore.loadWishes();
+    reaction((_) => wishStore.wishes.length, (_) {
+      setState(() {});
+    });
   }
-}
-
-class WishListScreen extends StatelessWidget {
-  final List<Wish> wishes = [
-    Wish(name: 'Путешествие на море', cost: 50000, progress: false),
-    Wish(name: 'Новая машина', cost: 1200000, progress: true),
-    Wish(name: 'Ноутбук', cost: 70000, progress: false),
-    Wish(name: 'Новая машина', cost: 1200000, progress: true),
-    Wish(name: 'Ноутбук', cost: 70000, progress: true),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,17 +47,21 @@ class WishListScreen extends StatelessWidget {
           ),
           SizedBox(height: 16),
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: wishes.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    WishWidget(wish: wishes[index]),
-                    if (index < wishes.length - 1) Divider(),
-                  ],
+            child: Observer(
+              builder: (_) {
+                return ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: wishStore.wishes.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        WishWidget(wish: wishStore.wishes[index]),
+                        if (index < wishStore.wishes.length - 1) Divider(),
+                      ],
+                    );
+                  },
                 );
-              },
+              }
             ),
           ),
         ],
@@ -118,7 +72,7 @@ class WishListScreen extends StatelessWidget {
         onPressed: () { Navigator.push(
             context,
             MaterialPageRoute(
-            builder: (context) => AddWishScreen(),
+            builder: (context) => AddWishPage(),
           )
         );
             },
