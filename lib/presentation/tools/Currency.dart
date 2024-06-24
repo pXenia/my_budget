@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Currency {
-  final String countryImage;
-  final String currencyName;
-  final double exchangeRate;
-
-  Currency({
-    required this.countryImage,
-    required this.currencyName,
-    required this.exchangeRate,
-  });
-}
+import '../../data/models/currency_model.dart';
 
 class CurrencyWidget extends StatelessWidget {
   final Currency currency;
