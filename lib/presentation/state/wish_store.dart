@@ -22,6 +22,17 @@ abstract class _WishStore with Store {
   @computed
   int get nextId => wishes.length + 1;
 
+  @computed
+  double get allWishesSum {
+    double sumValue = 0.0;
+    for (var element in wishes) {
+      if (!element.isDone) {
+        sumValue += element.cost;
+      }
+    }
+    return sumValue;
+  }
+
   @action
   Future<void> loadWishes() async {
     final loadedWishes = await _getWishes();

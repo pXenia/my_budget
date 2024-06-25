@@ -15,6 +15,13 @@ mixin _$WishStore on _WishStore, Store {
   int get nextId => (_$nextIdComputed ??=
           Computed<int>(() => super.nextId, name: '_WishStore.nextId'))
       .value;
+  Computed<double>? _$allWishesSumComputed;
+
+  @override
+  double get allWishesSum =>
+      (_$allWishesSumComputed ??= Computed<double>(() => super.allWishesSum,
+              name: '_WishStore.allWishesSum'))
+          .value;
 
   late final _$wishesAtom = Atom(name: '_WishStore.wishes', context: context);
 
@@ -68,7 +75,8 @@ mixin _$WishStore on _WishStore, Store {
   String toString() {
     return '''
 wishes: ${wishes},
-nextId: ${nextId}
+nextId: ${nextId},
+allWishesSum: ${allWishesSum}
     ''';
   }
 }
