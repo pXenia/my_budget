@@ -53,15 +53,37 @@ class _WishPageState extends State<WishPage> {
                   padding: const EdgeInsets.all(16.0),
                   itemCount: wishStore.wishes.length,
                   itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        WishWidget(wish: wishStore.wishes[index]),
-                        if (index < wishStore.wishes.length - 1) Divider(),
-                      ],
+                    final wish = wishStore.wishes[index];
+                    return Dismissible(
+                        key: Key(wish.id),
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (direction) {
+                          wishStore.deleteWish(wish.id);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('${wish.name} удалена'),
+                            ),
+                          );
+                        },
+                        background: Container(
+                          color: Color(0xffb6bfdb),
+                          alignment: Alignment.centerRight,
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
+                        ),
+                        child:  Column(
+                          children: [
+                            WishWidget(wish: wish),
+                            if (index < wishStore.wishes.length - 1) Divider(),
+                          ],
+                        )
                     );
                   },
                 );
-              }
+              },
             ),
           ),
         ],

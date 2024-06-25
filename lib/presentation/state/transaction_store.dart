@@ -20,9 +20,45 @@ abstract class _TransactionStore with Store {
   @computed
   int get nextId => transactions.length + 1;
 
+  @computed
+  double get totalBalance{
+    double sumValue = 0.0;
+    for (var element in transactions) {
+      if (element.isIncome) {
+        sumValue+= element.cost;
+      } else {
+        sumValue -= element.cost;
+      }}
+    return sumValue;
+  }
+
+  @computed
+  double get monthlyExpenses {
+    final now = DateTime.now();
+    double sumValue = 0.0;
+    for (var element in transactions){
+      if (!element.isIncome && element.date.month == now.month && element.date.year == now.year){
+        sumValue += element.cost;
+      }
+    }
+    return sumValue;
+  }
+
+  @computed
+  double get monthlyIncome {
+    final now = DateTime.now();
+    double sumValue = 0.0;
+    for (var element in transactions){
+      if (element.isIncome && element.date.month == now.month && element.date.year == now.year){
+        sumValue += element.cost;
+      }
+    }
+    return sumValue;
+  }
+
   @action
   Future<void> loadTransactions() async {
-    final loadedTransactions = _getTransactions();
+    final loadedTransactions = await _getTransactions();
     transactions = ObservableList.of(loadedTransactions);
   }
 

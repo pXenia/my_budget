@@ -61,11 +61,32 @@ class _HistoryPageState extends State<HistoryPage> {
                   itemCount: transactionStore.transactions.length,
                   itemBuilder: (context, index) {
                     final transaction = transactionStore.transactions[index];
-                    return Column(
+                    return Dismissible(
+                        key: Key(transaction.id),
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (direction) {
+                          transactionStore.deleteTransaction(transaction.id);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('${transaction.name} удалена'),
+                            ),
+                          );
+                        },
+                        background: Container(
+                          color: Color(0xffb6bfdb),
+                          alignment: Alignment.centerRight,
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
+                        ),
+                    child:  Column(
                       children: [
                         TransactionWidget(transaction: transaction),
                         if (index < transactionStore.transactions.length - 1) Divider(),
                       ],
+                    )
                     );
                   },
                 );

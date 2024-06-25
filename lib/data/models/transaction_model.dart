@@ -14,7 +14,7 @@ class TransactionModel extends HiveObject {
   DateTime date;
 
   @HiveField(3)
-  bool type;
+  bool isIncome;
 
   @HiveField(4)
   double cost;
@@ -23,6 +23,6 @@ class TransactionModel extends HiveObject {
       {required this.id,
       required this.name,
       required this.date,
-      required this.type,
+      required this.isIncome,
       required this.cost});
 }

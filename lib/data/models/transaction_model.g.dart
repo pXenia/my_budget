@@ -20,7 +20,7 @@ class TransactionModelAdapter extends TypeAdapter<TransactionModel> {
       id: fields[0] as String,
       name: fields[1] as String,
       date: fields[2] as DateTime,
-      type: fields[3] as bool,
+      isIncome: fields[3] as bool,
       cost: fields[4] as double,
     );
   }
@@ -36,7 +36,7 @@ class TransactionModelAdapter extends TypeAdapter<TransactionModel> {
       ..writeByte(2)
       ..write(obj.date)
       ..writeByte(3)
-      ..write(obj.type)
+      ..write(obj.isIncome)
       ..writeByte(4)
       ..write(obj.cost);
   }

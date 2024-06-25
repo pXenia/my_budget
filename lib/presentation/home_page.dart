@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_budget/presentation/state/currency_store.dart';
+import 'package:my_budget/presentation/state/transaction_store.dart';
 import 'package:my_budget/presentation/tools/Currency.dart';
 import 'package:my_budget/presentation/wish_page.dart';
+
+import '../data/models/currency_model.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   final ExchangeRateStore exchangeRateStore = GetIt.instance<ExchangeRateStore>();
+  final TransactionStore transactionStore = GetIt.instance<TransactionStore>();
 
   @override
   Widget build(BuildContext context) {
     exchangeRateStore.fetchExchangeRates();
+    transactionStore.loadTransactions();
 
     return Scaffold(
       body: Column(
@@ -33,19 +38,19 @@ class HomePage extends StatelessWidget {
                             color: Colors.black45,
                             fontSize: 18,
                           )),
-                      const Text("100 000 ₽",
+                      Text("${transactionStore.totalBalance.toStringAsFixed(0)} ₽",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 40,
                           )),
                       const SizedBox(height: 15),
-                      const Row(
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(children: [
                             Icon(Icons.keyboard_arrow_down_sharp),
-                            Text("10 000 ₽",
+                            Text("${transactionStore.monthlyExpenses.toStringAsFixed(0)} ₽",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -54,7 +59,7 @@ class HomePage extends StatelessWidget {
                           Row(
                             children: [
                               Icon(Icons.keyboard_arrow_up_sharp),
-                              Text("30 000 ₽",
+                              Text("${transactionStore.monthlyIncome.toStringAsFixed(0)} ₽",
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -110,11 +115,21 @@ class HomePage extends StatelessWidget {
                       const SizedBox(
                         height: 30,
                       ),
-                      const Text("До ближайшей цели",
-                          style: TextStyle(
-                            color: Colors.black45,
-                            fontSize: 18,
-                          )),
+                      Row(
+                        children: [
+                          const Text("Мои накопления",
+                              style: TextStyle(
+                                color: Colors.black45,
+                                fontSize: 18,
+                              )),
+                          IconButton(
+                            onPressed: (){},
+                            icon: Icon(
+                                Icons.published_with_changes,
+                            color: Colors.black45),
+                          )
+                        ],
+                      ),
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 0),
                         child: LinearProgressIndicator(

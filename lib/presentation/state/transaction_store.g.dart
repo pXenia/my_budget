@@ -15,6 +15,27 @@ mixin _$TransactionStore on _TransactionStore, Store {
   int get nextId => (_$nextIdComputed ??=
           Computed<int>(() => super.nextId, name: '_TransactionStore.nextId'))
       .value;
+  Computed<double>? _$totalBalanceComputed;
+
+  @override
+  double get totalBalance =>
+      (_$totalBalanceComputed ??= Computed<double>(() => super.totalBalance,
+              name: '_TransactionStore.totalBalance'))
+          .value;
+  Computed<double>? _$monthlyExpensesComputed;
+
+  @override
+  double get monthlyExpenses => (_$monthlyExpensesComputed ??= Computed<double>(
+          () => super.monthlyExpenses,
+          name: '_TransactionStore.monthlyExpenses'))
+      .value;
+  Computed<double>? _$monthlyIncomeComputed;
+
+  @override
+  double get monthlyIncome =>
+      (_$monthlyIncomeComputed ??= Computed<double>(() => super.monthlyIncome,
+              name: '_TransactionStore.monthlyIncome'))
+          .value;
 
   late final _$transactionsAtom =
       Atom(name: '_TransactionStore.transactions', context: context);
@@ -62,7 +83,10 @@ mixin _$TransactionStore on _TransactionStore, Store {
   String toString() {
     return '''
 transactions: ${transactions},
-nextId: ${nextId}
+nextId: ${nextId},
+totalBalance: ${totalBalance},
+monthlyExpenses: ${monthlyExpenses},
+monthlyIncome: ${monthlyIncome}
     ''';
   }
 }

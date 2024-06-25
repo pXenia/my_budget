@@ -18,6 +18,7 @@ class _AddWishPageState extends State<AddWishPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Color(0xffd2d9ec),
       appBar: AppBar(
         backgroundColor: Color(0xffd2d9ec),
@@ -28,60 +29,62 @@ class _AddWishPageState extends State<AddWishPage> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/personal_finance.png',
-              width: double.infinity,
-              height: 380,
-              fit: BoxFit.cover,
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Название'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Пожалуйста, введите название';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _wishName = value!;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Стоимость'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Пожалуйста, введите стоимость';
-                      }
-                      try {
-                        double.parse(value);
-                      } catch (_) {
-                        return 'Пожалуйста, введите правильное значение';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _wishCost = double.parse(value!);
-                    },
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _saveForm,
-                    child: Text('Сохранить'),
-                  ),
-                ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Image.asset(
+                'assets/personal_finance.png',
+                width: double.infinity,
+                height: 380,
+                fit: BoxFit.cover,
               ),
-            ),
-          ],
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Название'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Пожалуйста, введите название';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _wishName = value!;
+                      },
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Стоимость'),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Пожалуйста, введите стоимость';
+                        }
+                        try {
+                          double.parse(value);
+                        } catch (_) {
+                          return 'Пожалуйста, введите правильное значение';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _wishCost = double.parse(value!);
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _saveForm,
+                      child: Text('Сохранить'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
