@@ -1,5 +1,4 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -7,7 +6,6 @@ import 'package:my_budget/presentation/state/transaction_store.dart';
 import 'package:my_budget/presentation/tools/Transaction.dart';
 
 import 'add_transaction_page.dart';
-
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -28,32 +26,68 @@ class _HistoryPageState extends State<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final total = transactionStore.monthlyIncome + transactionStore.monthlyExpenses;
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddTransactionScreen(),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+          backgroundColor: Color(0xffb6bfdb),
+          title: const Text(
+            'История операций',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          )),
       body: Column(
         children: [
           Expanded(
             flex: 2,
             child: Container(
+              width: double.infinity,
               color: const Color(0xffb6bfdb),
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("За последний месяц",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 0),
+                      child: LinearProgressIndicator(
+                        backgroundColor: Colors.green.shade300,
+                        color: Colors.red.shade300,
+                        minHeight: 15,
+                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                        value: total != 0 ? transactionStore.monthlyExpenses / total: 0,
+                      ),
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Расходы",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Text("Доходы",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 5,
             child: Observer(
               builder: (_) {
                 return ListView.builder(
@@ -73,27 +107,39 @@ class _HistoryPageState extends State<HistoryPage> {
                           );
                         },
                         background: Container(
-                          color: Color(0xffb6bfdb),
+                          color: const Color(0xffb6bfdb),
                           alignment: Alignment.centerRight,
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Icon(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: const Icon(
                             Icons.delete,
                             color: Colors.white,
                           ),
                         ),
-                    child:  Column(
-                      children: [
-                        TransactionWidget(transaction: transaction),
-                        if (index < transactionStore.transactions.length - 1) Divider(),
-                      ],
-                    )
-                    );
+                        child: Column(
+                          children: [
+                            TransactionWidget(transaction: transaction),
+                            if (index <
+                                transactionStore.transactions.length - 1)
+                              const Divider(),
+                          ],
+                        ));
                   },
                 );
               },
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddTransactionScreen(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

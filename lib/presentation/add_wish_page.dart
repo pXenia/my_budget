@@ -75,17 +75,16 @@ class _AddWishPageState extends State<AddWishPage> {
                         _wishCost = double.parse(value!);
                       },
                     ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _saveForm,
-                      child: Text('Сохранить'),
-                    ),
                   ],
                 ),
               ),
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _saveForm,
+        child: Icon(Icons.done),
       ),
     );
   }

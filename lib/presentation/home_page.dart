@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 18,
                               )),
                           Text("${totalBalance.toStringAsFixed(0)} ₽",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 40,
                               )),
@@ -75,18 +75,18 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(children: [
-                                Icon(Icons.keyboard_arrow_down_sharp),
+                                const Icon(Icons.keyboard_arrow_down_sharp),
                                 Text("${monthlyExpenses.toStringAsFixed(0)} ₽",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     )),
                               ]),
                               Row(
                                 children: [
-                                  Icon(Icons.keyboard_arrow_up_sharp),
+                                  const Icon(Icons.keyboard_arrow_up_sharp),
                                   Text("${monthlyIncome.toStringAsFixed(0)} ₽",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       )),
@@ -141,13 +141,13 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(
                             height: 30,
                           ),
-                          const Text("Мои накопления",
+                          const Text("Необходимо накопить",
                               style: TextStyle(
                                 color: Colors.black45,
                                 fontSize: 18,
                               )),
                           Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
                             child: LinearProgressIndicator(
                               minHeight: 10,
                               value: allWishesSum != 0 ? totalBalance / allWishesSum : 0,
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                             width: double.maxFinite,
                             child: Text("${allWishesSum.toStringAsFixed(0)} ₽",
                                 textAlign: TextAlign.right,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 )),

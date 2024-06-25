@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_budget/presentation/state/transaction_store.dart';
@@ -24,6 +23,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
+      locale: const Locale('ru'),
       initialDate: _selectedDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
@@ -59,6 +59,20 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 width: double.infinity,
                 height: 380,
                 fit: BoxFit.cover,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Дата: ${DateFormat("dd.MM.yyyy").format(_selectedDate)}',
+                    style: TextStyle(
+                      fontSize: 16
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.calendar_today),
+                    onPressed: () => _selectDate(context),
+                  ),
+                ],
               ),
               Form(
                 key: _formKey,
@@ -101,11 +115,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                       items: const [
                         DropdownMenuItem(
                           value: true,
-                          child: Text('Доход'),
+                          child: Text('Доходы'),
                         ),
                         DropdownMenuItem(
                           value: false,
-                          child: Text('Расход'),
+                          child: Text('Расходы'),
                         ),
                       ],
                       onChanged: (value) {
@@ -113,18 +127,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                           _isIncome = value!;
                         });
                       },
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Text(
-                          'Дата: ${_selectedDate}',
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.calendar_today),
-                          onPressed: () => _selectDate(context),
-                        ),
-                      ],
                     ),
                   ],
                 ),

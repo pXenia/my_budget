@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_budget/presentation/history_page.dart';
 import 'package:my_budget/presentation/home_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'app.dart' as di;
 
 void main() async {
@@ -16,7 +17,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Мой Бюджет',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: const Locale('ru'),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
