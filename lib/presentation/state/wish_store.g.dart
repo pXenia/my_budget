@@ -55,6 +55,15 @@ mixin _$WishStore on _WishStore, Store {
     return _$deleteWishAsyncAction.run(() => super.deleteWish(id));
   }
 
+  late final _$updateWishIsDoneAsyncAction =
+      AsyncAction('_WishStore.updateWishIsDone', context: context);
+
+  @override
+  Future<void> updateWishIsDone(WishModel wish) {
+    return _$updateWishIsDoneAsyncAction
+        .run(() => super.updateWishIsDone(wish));
+  }
+
   @override
   String toString() {
     return '''

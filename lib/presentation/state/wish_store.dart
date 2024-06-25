@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-
+import 'package:my_budget/domain/usecases/update_wish_isDone.dart';
 import '../../data/models/wish_model.dart';
 import '../../domain/usecases/add_wish.dart';
 import '../../domain/usecases/delete_wish.dart';
@@ -14,6 +14,7 @@ abstract class _WishStore with Store {
   final AddWish _addWish = GetIt.instance<AddWish>();
   final GetWishes _getWishes = GetIt.instance<GetWishes>();
   final DeleteWish _deleteWish = GetIt.instance<DeleteWish>();
+  final UpdateWishIsDone _updateWishIsDone = GetIt.instance<UpdateWishIsDone>();
 
   @observable
   ObservableList<WishModel> wishes = ObservableList<WishModel>();
@@ -23,7 +24,7 @@ abstract class _WishStore with Store {
 
   @action
   Future<void> loadWishes() async {
-    final loadedWishes = _getWishes();
+    final loadedWishes = await _getWishes();
     wishes = ObservableList.of(loadedWishes);
   }
 
@@ -37,5 +38,14 @@ abstract class _WishStore with Store {
   Future<void> deleteWish(String id) async {
     await _deleteWish(id);
     wishes.removeWhere((wish) => wish.id == id);
+  }
+
+  @action
+  Future<void> updateWishIsDone(WishModel wish) async {
+    await _updateWishIsDone(wish);
+    int index = wishes.indexWhere((w) => w.id == wish.id);
+    if (index != -1) {
+      wishes[index] = wish;
+    }
   }
 }

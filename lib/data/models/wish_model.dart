@@ -14,12 +14,12 @@ class WishModel extends HiveObject {
   double cost;
 
   @HiveField(3)
-  bool type;
+  bool isDone;
 
   WishModel({
     required this.id,
     required this.name,
     required this.cost,
-    required this.type,
+    required this.isDone,
   });
 }

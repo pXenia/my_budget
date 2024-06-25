@@ -97,7 +97,7 @@ class _AddWishPageState extends State<AddWishPage> {
         id: wishStore.nextId.toString(),
         name: _wishName,
         cost: _wishCost,
-        type: false,
+        isDone: false,
       );
 
       await wishStore.createWish(newWish);

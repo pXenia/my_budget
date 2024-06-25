@@ -4,6 +4,7 @@ import 'package:my_budget/data/data_sources/remote/data_currency.dart';
 import 'package:my_budget/data/repositories/currency_repository_impl.dart';
 import 'package:my_budget/domain/repositories/transaction_repository.dart';
 import 'package:my_budget/domain/usecases/get_currency.dart';
+import 'package:my_budget/domain/usecases/update_wish_isDone.dart';
 import 'package:my_budget/presentation/state/currency_store.dart';
 import 'package:my_budget/presentation/state/transaction_store.dart';
 import 'package:my_budget/presentation/state/wish_store.dart';
@@ -43,6 +44,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => AddWish(getIt()));
   getIt.registerLazySingleton(() => GetWishes(getIt()));
   getIt.registerLazySingleton(() => DeleteWish(getIt()));
+  getIt.registerLazySingleton(() => UpdateWishIsDone(getIt()));
 
   getIt.registerLazySingleton(() => GetCurrency(getIt()));
 

@@ -4,4 +4,5 @@ abstract class WishRepository {
   Future<void> addWish(WishModel wish);
   List<WishModel> getWish();
   Future<void> deleteWish(String id);
+  Future<void> updateWish(WishModel wish);
 }

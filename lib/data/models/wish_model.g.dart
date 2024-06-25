@@ -20,7 +20,7 @@ class WishModelAdapter extends TypeAdapter<WishModel> {
       id: fields[0] as String,
       name: fields[1] as String,
       cost: fields[2] as double,
-      type: fields[3] as bool,
+      isDone: fields[3] as bool,
     );
   }
 
@@ -35,7 +35,7 @@ class WishModelAdapter extends TypeAdapter<WishModel> {
       ..writeByte(2)
       ..write(obj.cost)
       ..writeByte(3)
-      ..write(obj.type);
+      ..write(obj.isDone);
   }
 
   @override

@@ -25,4 +25,9 @@ class WishRepositoryImpl implements WishRepository {
     await box.delete(id);
   }
 
+  @override
+  Future<void> updateWish(WishModel wish) async {
+    final box = database.wishBox;
+    await box.put(wish.id, wish);
+  }
 }

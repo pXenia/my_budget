@@ -41,8 +41,8 @@ class _WishPageState extends State<WishPage> {
             child: Image.asset(
               'assets/personal_finance.png',
               width: double.infinity,
-              height: 380,
-              fit: BoxFit.cover,
+              height: 300,
+              fit: BoxFit.fitHeight,
             ),
           ),
           SizedBox(height: 16),
