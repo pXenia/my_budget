@@ -15,20 +15,22 @@ abstract class _TransactionStore with Store {
   final DeleteTransaction _deleteTransaction = GetIt.instance<DeleteTransaction>();
 
   @observable
-  ObservableList<TransactionModel> transactions = ObservableList<TransactionModel>();
+  ObservableList<TransactionModel> transactions =
+      ObservableList<TransactionModel>();
 
   @computed
   int get nextId => transactions.length + 1;
 
   @computed
-  double get totalBalance{
+  double get totalBalance {
     double sumValue = 0.0;
     for (var element in transactions) {
       if (element.isIncome) {
-        sumValue+= element.cost;
+        sumValue += element.cost;
       } else {
         sumValue -= element.cost;
-      }}
+      }
+    }
     return sumValue;
   }
 
@@ -36,8 +38,10 @@ abstract class _TransactionStore with Store {
   double get monthlyExpenses {
     final now = DateTime.now();
     double sumValue = 0.0;
-    for (var element in transactions){
-      if (!element.isIncome && element.date.month == now.month && element.date.year == now.year){
+    for (var element in transactions) {
+      if (!element.isIncome &&
+          element.date.month == now.month &&
+          element.date.year == now.year) {
         sumValue += element.cost;
       }
     }
@@ -48,8 +52,10 @@ abstract class _TransactionStore with Store {
   double get monthlyIncome {
     final now = DateTime.now();
     double sumValue = 0.0;
-    for (var element in transactions){
-      if (element.isIncome && element.date.month == now.month && element.date.year == now.year){
+    for (var element in transactions) {
+      if (element.isIncome &&
+          element.date.month == now.month &&
+          element.date.year == now.year) {
         sumValue += element.cost;
       }
     }

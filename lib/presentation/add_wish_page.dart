@@ -4,7 +4,6 @@ import 'package:my_budget/presentation/state/wish_store.dart';
 import '../data/models/wish_model.dart';
 import 'package:go_router/go_router.dart';
 
-
 class AddWishPage extends StatefulWidget {
   @override
   _AddWishPageState createState() => _AddWishPageState();
@@ -19,12 +18,13 @@ class _AddWishPageState extends State<AddWishPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Color(0xffd2d9ec),
       appBar: AppBar(
         backgroundColor: Color(0xffd2d9ec),
-        title: Text(
+        title: const Text(
           'Добавить желание',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -39,7 +39,7 @@ class _AddWishPageState extends State<AddWishPage> {
               Image.asset(
                 'assets/personal_finance.png',
                 width: double.infinity,
-                height: 380,
+                height: screenHeight * 0.5,
                 fit: BoxFit.cover,
               ),
               Form(
@@ -60,7 +60,7 @@ class _AddWishPageState extends State<AddWishPage> {
                       },
                     ),
                     TextFormField(
-                      decoration: InputDecoration(labelText: 'Стоимость'),
+                      decoration: InputDecoration(labelText: 'Сумма'),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -90,20 +90,18 @@ class _AddWishPageState extends State<AddWishPage> {
       ),
     );
   }
+
   void _saveForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
       final newWish = WishModel(
         id: wishStore.nextId,
         name: _wishName,
         cost: _wishCost,
         isDone: false,
       );
-
       await wishStore.createWish(newWish);
       context.pop();
-
     }
   }
 }

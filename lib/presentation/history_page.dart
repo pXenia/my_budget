@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:my_budget/presentation/state/transaction_store.dart';
 import 'package:my_budget/presentation/tools/Transaction.dart';
 
-
 class HistoryPage extends StatelessWidget {
   final TransactionStore transactionStore = GetIt.instance<TransactionStore>();
 
@@ -40,17 +39,21 @@ class HistoryPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       )),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 0),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
                     child: Observer(
                       builder: (context) {
-                        final total = transactionStore.monthlyIncome + transactionStore.monthlyExpenses;
+                        final total = transactionStore.monthlyIncome +
+                            transactionStore.monthlyExpenses;
                         return LinearProgressIndicator(
                           backgroundColor: Colors.green.shade300,
                           color: Colors.red.shade300,
                           minHeight: 15,
-                          borderRadius: const BorderRadius.all(Radius.circular(7)),
-                          value: total != 0 ? transactionStore.monthlyExpenses / total : 0,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(7)),
+                          value: total != 0
+                              ? transactionStore.monthlyExpenses / total
+                              : 0,
                         );
                       },
                     ),
@@ -121,6 +124,7 @@ class HistoryPage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xffb6bfdb),
         onPressed: () => context.go('/history/add'),
         child: const Icon(Icons.add),
       ),

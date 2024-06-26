@@ -7,6 +7,6 @@ class AddTransaction {
   AddTransaction(this.repository);
 
   Future<void> call(TransactionModel transaction) {
-  return repository.addTransaction(transaction);
+    return repository.addTransaction(transaction);
   }
 }

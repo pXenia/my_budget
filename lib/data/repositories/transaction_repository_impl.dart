@@ -24,5 +24,4 @@ class TransactionRepositoryImpl implements TransactionRepository {
     final box = database.transactionBox;
     await box.delete(id);
   }
-
 }

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_budget/presentation/state/transaction_store.dart';
 import 'package:go_router/go_router.dart';
-
 import '../data/models/transaction_model.dart';
-
 
 class AddTransactionPage extends StatefulWidget {
   @override
@@ -38,12 +36,13 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Color(0xffd2d9ec),
+      backgroundColor: const Color(0xffd2d9ec),
       appBar: AppBar(
-        backgroundColor: Color(0xffd2d9ec),
-        title: Text(
+        backgroundColor: const Color(0xffd2d9ec),
+        title: const Text(
           'Добавить транзакцию',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -58,19 +57,17 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               Image.asset(
                 'assets/personal_finance.png',
                 width: double.infinity,
-                height: 350,
+                height: screenHeight * 0.4,
                 fit: BoxFit.cover,
               ),
               Row(
                 children: [
                   Text(
                     'Дата: ${DateFormat("dd.MM.yyyy").format(_selectedDate)}',
-                    style: TextStyle(
-                      fontSize: 16
-                    ),
+                    style: const TextStyle(fontSize: 16),
                   ),
                   IconButton(
-                    icon: Icon(Icons.calendar_today),
+                    icon: const Icon(Icons.calendar_today),
                     onPressed: () => _selectDate(context),
                   ),
                 ],
@@ -81,7 +78,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      decoration: InputDecoration(labelText: 'Название'),
+                      decoration: const InputDecoration(labelText: 'Название'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Пожалуйста, введите название';
@@ -93,7 +90,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                       },
                     ),
                     TextFormField(
-                      decoration: InputDecoration(labelText: 'Стоимость'),
+                      decoration: const InputDecoration(labelText: 'Сумма'),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -111,7 +108,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                       },
                     ),
                     DropdownButtonFormField<bool>(
-                      decoration: InputDecoration(labelText: 'Тип'),
+                      decoration: const InputDecoration(labelText: 'Тип'),
                       value: _isIncome,
                       items: const [
                         DropdownMenuItem(
@@ -138,7 +135,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _saveForm,
-        child: Icon(Icons.done),
+        child: const Icon(Icons.done),
       ),
     );
   }
@@ -146,7 +143,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   void _saveForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-
       final newTransaction = TransactionModel(
         id: transactionStore.nextId,
         name: _transactionName,

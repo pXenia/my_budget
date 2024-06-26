@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -6,7 +7,6 @@ import 'package:my_budget/presentation/state/currency_store.dart';
 import 'package:my_budget/presentation/state/transaction_store.dart';
 import 'package:my_budget/presentation/state/wish_store.dart';
 import 'package:my_budget/presentation/tools/Currency.dart';
-
 import '../data/models/currency_model.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final screenHeight = MediaQuery.of(context).size.height;
     transactionStore.loadTransactions();
     wishStore.loadWishes();
     exchangeRateStore.fetchCurrency();
@@ -32,128 +32,124 @@ class HomePage extends StatelessWidget {
           final allWishesSum = wishStore.allWishesSum;
           final currencies = exchangeRateStore.currency.entries
               .map((e) => Currency(
-            countryImage: getCountryFlag(e.key),
-            currencyName: e.key,
-            exchangeRate: (1 / e.value).toStringAsFixed(2),
-          ))
+                    countryImage: getCountryFlag(e.key),
+                    currencyName: e.key,
+                    exchangeRate: (1 / e.value).toStringAsFixed(2),
+                  ))
               .toList();
           return Column(
             children: [
-              Expanded(
-                flex: 2,
-                child: Container(
-                  color: const Color(0xffb6bfdb),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 60.0, left: 20, right: 20, bottom: 0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              Container(
+                color: const Color(0xffb6bfdb),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: 32.0,
+                      top: screenHeight * 0.08,
+                      right: 32,
+                      bottom: screenHeight * 0.03),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text("Баланс",
+                          style: TextStyle(
+                            color: Colors.black45,
+                            fontSize: 18,
+                          )),
+                      Text("${totalBalance.toStringAsFixed(0)} ₽",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40,
+                          )),
+                      const SizedBox(height: 15),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text("Баланс",
-                              style: TextStyle(
-                                color: Colors.black45,
-                                fontSize: 18,
-                              )),
-                          Text("${totalBalance.toStringAsFixed(0)} ₽",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 40,
-                              )),
-                          const SizedBox(height: 15),
+                          Row(children: [
+                            const Icon(Icons.keyboard_arrow_down_sharp),
+                            Text("${monthlyExpenses.toStringAsFixed(0)} ₽",
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ]),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(children: [
-                                const Icon(Icons.keyboard_arrow_down_sharp),
-                                Text("${monthlyExpenses.toStringAsFixed(0)} ₽",
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ]),
-                              Row(
-                                children: [
-                                  const Icon(Icons.keyboard_arrow_up_sharp),
-                                  Text("${monthlyIncome.toStringAsFixed(0)} ₽",
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                ],
+                              const Icon(Icons.keyboard_arrow_up_sharp),
+                              Text("${monthlyIncome.toStringAsFixed(0)} ₽",
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.05,
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.08,
+                        width: double.maxFinite,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              elevation: 4,
+                              backgroundColor: const Color(0xff6d82a4),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              padding: const EdgeInsets.all(8.0)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl:
+                                    "https://cdn1.iconfinder.com/data/icons/money-bag-1/100/bag-ruble-256.png",
+                                fit: BoxFit.fill,
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              const Text(
+                                "Мои цели",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               )
                             ],
                           ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          SizedBox(
-                            height: 70,
-                            width: double.maxFinite,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  elevation: 4,
-                                  backgroundColor: const Color(0xff6d82a4),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  padding: const EdgeInsets.all(8.0)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.network(
-                                    "https://cdn1.iconfinder.com/data/icons/money-bag-1/100/bag-ruble-256.png",
-                                    fit: BoxFit.fill,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  const Text(
-                                    "Мои цели",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              onPressed:  () => context.go('/wish'),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          const Text("Необходимо накопить",
-                              style: TextStyle(
-                                color: Colors.black45,
-                                fontSize: 18,
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 0),
-                            child: LinearProgressIndicator(
-                              minHeight: 10,
-                              value: allWishesSum != 0
-                                  ? totalBalance / allWishesSum
-                                  : 0,
-                              backgroundColor: Colors.grey[300],
-                            ),
-                          ),
-                          Container(
-                            width: double.maxFinite,
-                            child: Text("${allWishesSum.toStringAsFixed(0)} ₽",
-                                textAlign: TextAlign.right,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                          ),
-                        ],
+                          onPressed: () => context.go('/wish'),
+                        ),
                       ),
-                    ),
+                      SizedBox(height: screenHeight * 0.04),
+                      const Text("Необходимо накопить",
+                          style: TextStyle(
+                            color: Colors.black45,
+                            fontSize: 18,
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 0),
+                        child: LinearProgressIndicator(
+                          minHeight: 12,
+                          value: allWishesSum != 0
+                              ? totalBalance / allWishesSum
+                              : 0,
+                          backgroundColor: Colors.grey[300],
+                        ),
+                      ),
+                      Container(
+                        width: double.maxFinite,
+                        child: Text("${allWishesSum.toStringAsFixed(0)} ₽",
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ),
+                    ],
                   ),
                 ),
               ),

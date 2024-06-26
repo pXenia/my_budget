@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/currency_model.dart';
@@ -13,24 +14,25 @@ class CurrencyWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Image.network(
-            currency.countryImage,
+          CachedNetworkImage(
+            imageUrl: currency.countryImage,
             width: 40,
             height: 40,
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   currency.currencyName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   '1 ${currency.currencyName} = ${currency.exchangeRate} RUB',
                   style: TextStyle(

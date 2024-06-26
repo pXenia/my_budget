@@ -1,9 +1,7 @@
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../models/transaction_model.dart';
 import '../../models/wish_model.dart';
-
 
 class Database {
   static const String transactionBoxName = 'transactions';

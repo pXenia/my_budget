@@ -23,7 +23,7 @@ class _WishWidgetState extends State<WishWidget> {
     _isDone = widget.wish.isDone;
   }
 
-  void _toggleCompletion(bool? value) async {
+  void _changeCheckbox(bool? value) async {
     if (value != null) {
       setState(() {
         _isDone = value;
@@ -35,44 +35,41 @@ class _WishWidgetState extends State<WishWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        children: [
-          Checkbox(
-            value: _isDone,
-            onChanged: _toggleCompletion,
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.wish.name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: _isDone ? Colors.grey : Colors.black,
-                      ),
+    return Row(
+      children: [
+        Checkbox(
+          value: _isDone,
+          onChanged: _changeCheckbox,
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.wish.name,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: _isDone ? Colors.grey : Colors.black,
                     ),
-                    SizedBox(height: 4),
-                    Text(
-                      '${widget.wish.cost.toStringAsFixed(0)} RUB',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: _isDone ? Colors.grey : Colors.grey[600],
-                      ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${widget.wish.cost.toStringAsFixed(0)} RUB',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: _isDone ? Colors.grey : Colors.grey[600],
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

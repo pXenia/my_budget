@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../data/models/transaction_model.dart';
 
@@ -14,26 +15,26 @@ class TransactionWidget extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 20,
-            height: 20,
+            width: 15,
+            height: 15,
             decoration: BoxDecoration(
               color: transaction.isIncome ? Colors.green : Colors.red,
               shape: BoxShape.circle,
             ),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   transaction.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   '${transaction.cost.toStringAsFixed(0)} RUB',
                   style: TextStyle(
@@ -42,6 +43,12 @@ class TransactionWidget extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          Text(
+            DateFormat("dd.MM.yyyy").format(transaction.date),
+            style: const TextStyle(
+              fontSize: 14,
             ),
           ),
         ],

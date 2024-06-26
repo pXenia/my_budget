@@ -14,6 +14,7 @@ class WishPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
           backgroundColor: const Color(0xffb6bfdb),
@@ -30,7 +31,7 @@ class WishPage extends StatelessWidget {
             child: Image.asset(
               'assets/personal_finance.png',
               width: double.infinity,
-              height: 300,
+              height: screenHeight * 0.45,
               fit: BoxFit.fitHeight,
             ),
           ),
@@ -66,7 +67,8 @@ class WishPage extends StatelessWidget {
                       child: Column(
                         children: [
                           WishWidget(wish: wish),
-                          if (index < wishStore.wishes.length - 1) const Divider(),
+                          if (index < wishStore.wishes.length - 1)
+                            const Divider(),
                         ],
                       ),
                     );

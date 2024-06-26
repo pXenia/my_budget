@@ -19,10 +19,11 @@ class TransactionModel extends HiveObject {
   @HiveField(4)
   double cost;
 
-  TransactionModel(
-      {required this.id,
+  TransactionModel({
+    required this.id,
       required this.name,
       required this.date,
       required this.isIncome,
-      required this.cost});
+      required this.cost
+  });
 }
