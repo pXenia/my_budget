@@ -1,36 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_budget/presentation/state/currency_store.dart';
 import 'package:my_budget/presentation/state/transaction_store.dart';
 import 'package:my_budget/presentation/state/wish_store.dart';
 import 'package:my_budget/presentation/tools/Currency.dart';
-import 'package:my_budget/presentation/wish_page.dart';
 
 import '../data/models/currency_model.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({super.key});
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final ExchangeRateStore exchangeRateStore = GetIt.instance<ExchangeRateStore>();
+class HomePage extends StatelessWidget {
+  final CurrencyStore exchangeRateStore = GetIt.instance<CurrencyStore>();
   final TransactionStore transactionStore = GetIt.instance<TransactionStore>();
   final WishStore wishStore = GetIt.instance<WishStore>();
 
-  @override
-  void initState() {
-    super.initState();
-    transactionStore.loadTransactions();
-    wishStore.loadWishes();
-    exchangeRateStore.fetchExchangeRates();
-  }
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    transactionStore.loadTransactions();
+    wishStore.loadWishes();
+    exchangeRateStore.fetchCurrency();
+
     return Scaffold(
       body: Observer(
         builder: (context) {
@@ -38,14 +30,13 @@ class _HomePageState extends State<HomePage> {
           final monthlyExpenses = transactionStore.monthlyExpenses;
           final monthlyIncome = transactionStore.monthlyIncome;
           final allWishesSum = wishStore.allWishesSum;
-          final currencies = exchangeRateStore.exchangeRates.entries
+          final currencies = exchangeRateStore.currency.entries
               .map((e) => Currency(
             countryImage: getCountryFlag(e.key),
             currencyName: e.key,
             exchangeRate: (1 / e.value).toStringAsFixed(2),
           ))
               .toList();
-
           return Column(
             children: [
               Expanded(
@@ -53,7 +44,8 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   color: const Color(0xffb6bfdb),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 60.0, left: 20, right: 20, bottom: 0),
+                    padding: const EdgeInsets.only(
+                        top: 60.0, left: 20, right: 20, bottom: 0),
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
@@ -128,14 +120,7 @@ class _HomePageState extends State<HomePage> {
                                   )
                                 ],
                               ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => WishPage(),
-                                  ),
-                                );
-                              },
+                              onPressed:  () => context.go('/wish'),
                             ),
                           ),
                           const SizedBox(
@@ -147,10 +132,14 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 18,
                               )),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 0),
                             child: LinearProgressIndicator(
                               minHeight: 10,
-                              value: allWishesSum != 0 ? totalBalance / allWishesSum : 0,
+                              value: allWishesSum != 0
+                                  ? totalBalance / allWishesSum
+                                  : 0,
+                              backgroundColor: Colors.grey[300],
                             ),
                           ),
                           Container(

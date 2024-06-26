@@ -2,16 +2,17 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_budget/presentation/state/transaction_store.dart';
+import 'package:go_router/go_router.dart';
 
 import '../data/models/transaction_model.dart';
 
 
-class AddTransactionScreen extends StatefulWidget {
+class AddTransactionPage extends StatefulWidget {
   @override
-  _AddTransactionScreenState createState() => _AddTransactionScreenState();
+  _AddTransactionPageState createState() => _AddTransactionPageState();
 }
 
-class _AddTransactionScreenState extends State<AddTransactionScreen> {
+class _AddTransactionPageState extends State<AddTransactionPage> {
   final _formKey = GlobalKey<FormState>();
   String _transactionName = '';
   double _transactionCost = 0.0;
@@ -57,7 +58,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               Image.asset(
                 'assets/personal_finance.png',
                 width: double.infinity,
-                height: 380,
+                height: 350,
                 fit: BoxFit.cover,
               ),
               Row(
@@ -147,15 +148,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       _formKey.currentState!.save();
 
       final newTransaction = TransactionModel(
-        id: transactionStore.nextId.toString(),
+        id: transactionStore.nextId,
         name: _transactionName,
         date: _selectedDate,
         isIncome: _isIncome,
         cost: _transactionCost,
       );
-
       await transactionStore.createTransaction(newTransaction);
-      Navigator.pop(context);
+      context.pop();
     }
   }
 }

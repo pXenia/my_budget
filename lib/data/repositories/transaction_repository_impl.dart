@@ -20,7 +20,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<void> deleteTransaction(String id) async {
+  Future<void> deleteTransaction(int id) async {
     final box = database.transactionBox;
     await box.delete(id);
   }

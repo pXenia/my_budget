@@ -1,4 +1,3 @@
-
 import '../repositories/transaction_repository.dart';
 
 class DeleteTransaction {
@@ -6,7 +5,7 @@ class DeleteTransaction {
 
   DeleteTransaction(this.repository);
 
-  Future<void> call(String id) async {
+  Future<void> call(int id) async {
     await repository.deleteTransaction(id);
   }
 }

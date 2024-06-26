@@ -69,7 +69,7 @@ abstract class _TransactionStore with Store {
   }
 
   @action
-  Future<void> deleteTransaction(String id) async {
+  Future<void> deleteTransaction(int id) async {
     await _deleteTransaction(id);
     transactions.removeWhere((transaction) => transaction.id == id);
   }

@@ -46,7 +46,7 @@ abstract class _WishStore with Store {
   }
 
   @action
-  Future<void> deleteWish(String id) async {
+  Future<void> deleteWish(int id) async {
     await _deleteWish(id);
     wishes.removeWhere((wish) => wish.id == id);
   }

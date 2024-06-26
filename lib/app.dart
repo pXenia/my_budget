@@ -50,5 +50,5 @@ Future<void> init() async {
 
   getIt.registerLazySingleton(() => TransactionStore());
   getIt.registerLazySingleton(() => WishStore());
-  getIt.registerLazySingleton(() => ExchangeRateStore());
+  getIt.registerLazySingleton(() => CurrencyStore());
 }

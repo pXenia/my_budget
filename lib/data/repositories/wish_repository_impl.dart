@@ -20,7 +20,7 @@ class WishRepositoryImpl implements WishRepository {
   }
 
   @override
-  Future<void> deleteWish(String id) async {
+  Future<void> deleteWish(int id) async {
     final box = database.wishBox;
     await box.delete(id);
   }

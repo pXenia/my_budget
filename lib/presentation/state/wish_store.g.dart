@@ -58,7 +58,7 @@ mixin _$WishStore on _WishStore, Store {
       AsyncAction('_WishStore.deleteWish', context: context);
 
   @override
-  Future<void> deleteWish(String id) {
+  Future<void> deleteWish(int id) {
     return _$deleteWishAsyncAction.run(() => super.deleteWish(id));
   }
 

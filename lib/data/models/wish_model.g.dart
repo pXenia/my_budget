@@ -17,7 +17,7 @@ class WishModelAdapter extends TypeAdapter<WishModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return WishModel(
-      id: fields[0] as String,
+      id: fields[0] as int,
       name: fields[1] as String,
       cost: fields[2] as double,
       isDone: fields[3] as bool,

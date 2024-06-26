@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_budget/presentation/state/wish_store.dart';
 import '../data/models/wish_model.dart';
+import 'package:go_router/go_router.dart';
+
 
 class AddWishPage extends StatefulWidget {
   @override
@@ -93,14 +95,15 @@ class _AddWishPageState extends State<AddWishPage> {
       _formKey.currentState!.save();
 
       final newWish = WishModel(
-        id: wishStore.nextId.toString(),
+        id: wishStore.nextId,
         name: _wishName,
         cost: _wishCost,
         isDone: false,
       );
 
       await wishStore.createWish(newWish);
-      Navigator.pop(context);
+      context.pop();
+
     }
   }
 }

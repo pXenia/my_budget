@@ -74,7 +74,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
       AsyncAction('_TransactionStore.deleteTransaction', context: context);
 
   @override
-  Future<void> deleteTransaction(String id) {
+  Future<void> deleteTransaction(int id) {
     return _$deleteTransactionAsyncAction
         .run(() => super.deleteTransaction(id));
   }
